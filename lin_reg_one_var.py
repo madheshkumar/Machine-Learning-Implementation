@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 
 data = pd.read_csv("data1.csv")
 
+#x = initial cost
+#y = annual profit
+
 # linear regression for single variable : y = mx +c
 def gradientDescent(m_cur, c_cur, points, alpha):
     m_gradient = 0
@@ -10,7 +13,7 @@ def gradientDescent(m_cur, c_cur, points, alpha):
     n = len(points)
     for i in range(n):
         x = points.iloc[i].annual
-        y = points.iloc[i].start
+        y = points.iloc[i].initial
 
         m_gradient += -(2 / n) * x * (y - (m_cur * x + c_cur))
         c_gradient += -(2 / n) * (y - (m_cur * x + c_cur))
@@ -28,6 +31,12 @@ for i in range(iters):
     m, c = gradientDescent(m, c, data, alpha)
 
 print(m, c)
-plt.scatter(data.annual, data.start, color="black")
+plt.scatter(data.annual, data.initial, color="black")
 plt.plot(list(range(0, 4)), [m * x + c for x in range(0,4)], color="blue")
 plt.show()
+
+input=int(input())
+x = input/1000
+predicted = (m*x+c)*1000
+print("Predicted annual profit for",input,"is","{:.2f}".format(predicted))
+
